@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy;
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI']='postgres://limyxjbngavbze:1318a7c6a896dc745ee9d9c75848682c342ca5bc7d7613395b15b3d732a549f2@ec2-23-23-182-238.compute-1.amazonaws.com:5432/da8lnjubopm63j'
+app.config['SQLALCHEMY_DATABASE_URI']=const.DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 
 db = SQLAlchemy(app)
@@ -36,3 +36,7 @@ def post_db(id,bank,wallet):
 #         access_token = request.headers["access_token"]
 #         no_of_nft = request.headers["no_of_nft"]
 #         return assign_owners_role(access_token,int(no_of_nft))
+
+
+if __name__ == "__main__":
+    app.run(debug=True)

@@ -1,4 +1,4 @@
 import os
 BOT_TOKEN = os.environ['BOT_TOKEN']
-TEST_BOT_TOKEN=os.environ['TEST_BOT_TOKEN']
+DATABASE_URL = os.environ['DATABASE_URL']
 #BOT_TOKEN = "OTg5MDc3NzU4MzkzMDc3NzYy.GzbMFV.3meQ-NzyRQH-wSpIJ5WZB9yCpezHdQLW6XJj1o"
