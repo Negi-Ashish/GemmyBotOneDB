@@ -1,1 +1,1 @@
-worker: python multipleRunner.py
+web: gunicorn botOneDB:app 
