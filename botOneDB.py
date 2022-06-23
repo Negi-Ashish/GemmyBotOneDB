@@ -3,10 +3,14 @@ from flask import request,redirect;
 import config.constants as const;
 from flask_sqlalchemy import SQLAlchemy;
 
+DATABASE_URL=const.DATABASE_URL
+
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI']=const.DATABASE_URL
+app.config['SQLALCHEMY_DATABASE_URI']=DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 
 db = SQLAlchemy(app)
