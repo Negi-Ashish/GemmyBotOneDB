@@ -123,7 +123,7 @@ def test_update():
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
 
-        query = """UPDATE test_db SET Age=111 Where Name="John";"""
+        query = """UPDATE test_db SET Name="John" Where Age="20";"""
 
         cur.execute(query)
         con.commit()
