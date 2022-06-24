@@ -30,7 +30,7 @@ async def read_balance(userID):
         query = f"""SELECT "wallet_balance","bank_balance" FROM user_account Where ("user_id"='{userID}')"""        
         cur.execute(query)
         con.commit()
-        record = cur.fetchall()
+        record = cur.fetchone()
         print(record)
     finally:
         if con is not None:
