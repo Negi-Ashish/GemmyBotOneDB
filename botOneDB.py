@@ -49,12 +49,6 @@ def test_function_one():
         return "Success"
 
 
-@app.route('/test_function',methods = ['GET'])
-def test_function_two():
-    if request.method=="GET":
-        return test_function()
-
-
 @app.route('/test_read',methods = ['GET'])
 def test_function_three():
     if request.method=="GET":
@@ -96,7 +90,7 @@ def test_read():
         # close the communication with the database server by calling the close()
         if con is not None:
             con.close()
-            print('Database connection closed.')
+            
     
     return ("PASSED")
 
@@ -120,8 +114,6 @@ def test_write():
         # close the communication with the database server by calling the close()
         if con is not None:
             con.close()
-            print('Database connection closed.')
-    
     return ("INSERTED")
 
 
@@ -133,7 +125,7 @@ def test_update():
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
 
-        query = """UPDATE test_db SET "age"='200' Where ("name"='Ashish');"""
+        query = """UPDATE user_account SET "wallet_balance"='200' Where ("user_id"='Ashish');"""
 
         cur.execute(query)
         con.commit()
@@ -143,20 +135,19 @@ def test_update():
         # close the communication with the database server by calling the close()
         if con is not None:
             con.close()
-            print('Database connection closed.')
     
     return ("UPDATED")
 
 
 
 
-def test_function():
-    engine = db.create_engine(DATABASE_URL,{"pool_size": 20})
-    data = {'name': ['John'], 'age': [20]}  
-    df = pd.DataFrame(data).set_index('name')
-    print(df)
-    df.to_sql('test_db', con = engine, if_exists='append')
-    return "NOT FAIL"
+# def test_function():
+#     engine = db.create_engine(DATABASE_URL,{"pool_size": 20})
+#     data = {'name': ['John'], 'age': [20]}  
+#     df = pd.DataFrame(data).set_index('name')
+#     print(df)
+#     df.to_sql('test_db', con = engine, if_exists='append')
+#     return "NOT FAIL"
 
 
 
@@ -178,7 +169,7 @@ def create_table():
     finally:
         if con is not None:
             con.close()
-            print('Database connection closed.')
+            
     
     return ("Created")
 
