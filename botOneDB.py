@@ -66,7 +66,7 @@ async def test_read():
 
 
 
-def test_write(userID,walletBalance,bankBalance):
+async def test_write(userID,walletBalance,bankBalance):
     try:
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
@@ -84,7 +84,7 @@ def test_write(userID,walletBalance,bankBalance):
     return ("INSERTED")
 
 
-def test_update():
+async def test_update():
     try:
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
