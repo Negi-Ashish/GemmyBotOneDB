@@ -79,9 +79,15 @@ def test_read():
 
         query = f"""SELECT * 
                     FROM test_db"""        
-        results = pd.read_sql(query, con).set_index('name')
-        print("typerOF",type(results))
-        print(results)
+        # results = pd.read_sql(query, con).set_index('name')
+        # print("typerOF",type(results))
+        # print(results)
+        cur.execute(query)
+        con.commit()
+        record = cursor.fetchone()
+        print(record)
+
+
     finally:
         # close the communication with the database server by calling the close()
         if con is not None:
