@@ -61,7 +61,7 @@ def test_function_three():
         return test_read()
 
 @app.route('/test_write',methods = ['POST'])
-def test_function_three():
+def test_function_four():
     if request.method=="POST":
         return test_write()
 
