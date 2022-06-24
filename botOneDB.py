@@ -94,7 +94,7 @@ def test_write():
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
 
-        query = """INSERT INTO test_db('Name','Age') VALUES ('Ashish',20) """
+        query = """INSERT INTO test_db(Name,Age) VALUES('Ashish',20) """
 
         
         pd.read_sql(query, con)
