@@ -23,21 +23,6 @@ async def test_read():
     return "SUCCESS"
 
 
-async def read_balance(userID):
-    try:
-        con = psycopg2.connect(DATABASE_URL)
-        cur = con.cursor()
-        query = f"""SELECT "wallet_balance","bank_balance" FROM user_account Where ("user_id"='{userID}')"""        
-        cur.execute(query)
-        con.commit()
-        record = cur.fetchone()
-        print(record)
-    finally:
-        if con is not None:
-            con.close()
-    return "SUCCESS"
-
-
 
 async def test_write(userID,walletBalance,bankBalance):
     try:
@@ -49,7 +34,6 @@ async def test_write(userID,walletBalance,bankBalance):
     except:
         return "User alredy Exists"
     finally:
-        # close the communication with the database server by calling the close()
         if con is not None:
             con.close()
     return ("INSERTED")
@@ -63,7 +47,6 @@ async def test_update():
         cur.execute(query)
         con.commit()
     finally:
-        # close the communication with the database server by calling the close()
         if con is not None:
             con.close()
     return ("UPDATED")
@@ -88,3 +71,28 @@ def create_table():
             con.close()
     return ("Created")
 
+async def read_balance(userID):
+    try:
+        con = psycopg2.connect(DATABASE_URL)
+        cur = con.cursor()
+        query = f"""SELECT "wallet_balance","bank_balance" FROM user_account Where ("user_id"='{userID}')"""        
+        cur.execute(query)
+        con.commit()
+        record = cur.fetchone()
+        print(record)
+    finally:
+        if con is not None:
+            con.close()
+    return "SUCCESS"
+
+async def update_balance(userID,walletBalance,bankBalance):
+    try:
+        con = psycopg2.connect(DATABASE_URL)
+        cur = con.cursor()
+        query = f"""UPDATE user_account SET "wallet_balance"='{walletBalance}',"bank_balance"='{bankBalance}' Where ("user_id"='{userID}');"""
+        cur.execute(query)
+        con.commit()
+    finally:
+        if con is not None:
+            con.close()
+    return ("UPDATED")

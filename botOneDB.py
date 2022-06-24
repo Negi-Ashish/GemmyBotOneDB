@@ -2,7 +2,7 @@ from flask import Flask;
 from flask import request,redirect;
 import config.constants as const;
 from flask_sqlalchemy import SQLAlchemy;
-from botOneFun import test_read,read_balance,test_write,test_update,create_table
+from botOneFun import test_read,read_balance,test_write,test_update,create_table,update_balance
 
 DATABASE_URL=const.DATABASE_URL
 
@@ -57,7 +57,14 @@ async def read_balances():
     except:
         return "ERROR"
 
-
+@app.route('/update_balances',methods = ['PUT'])
+async def test_function_five():
+    try:
+        if request.method=="PUT":
+            data = request.json
+            return await update_balance(data['userId'],data['walletBalance'],data['bankBalance'])
+    except:
+        return "Wrong json format"
 
 if __name__ == "__main__":
     app.run(debug=True)
