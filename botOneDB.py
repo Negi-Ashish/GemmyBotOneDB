@@ -19,7 +19,7 @@ db = SQLAlchemy(app)
 
 app.config['SQLALCHEMY_DATABASE_URI']=DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
-
+app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {"pool_size": 20}
 
 class UserAccountModal(db.Model):
     __tablename__ = 'user_account_modal'
