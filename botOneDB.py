@@ -72,7 +72,7 @@ def test_read():
                     FROM test_db"""
 
         results = pd.read_sql(query, con)
-
+        print("typerOF",type(results))
         print(results)
     finally:
         # close the communication with the database server by calling the close()
@@ -80,7 +80,7 @@ def test_read():
             con.close()
             print('Database connection closed.')
     
-    return "PASSED"
+    return ("PASSED",results)
 
 
 
