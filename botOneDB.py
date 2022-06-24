@@ -60,7 +60,10 @@ def test_function_three():
     if request.method=="GET":
         return test_read()
 
-
+@app.route('/test_write',methods = ['POST'])
+def test_function_three():
+    if request.method=="POST":
+        return test_write()
 
 def test_read():
     try:
@@ -69,8 +72,7 @@ def test_read():
         cur = con.cursor()
 
         query = f"""SELECT * 
-                    FROM test_db"""
-
+                    FROM test_db"""        
         results = pd.read_sql(query, con).set_index('Name')
         print("typerOF",type(results))
         print(results)
@@ -81,6 +83,28 @@ def test_read():
             print('Database connection closed.')
     
     return ("PASSED")
+
+
+
+
+
+def test_write():
+    try:
+
+        con = psycopg2.connect(DATABASE_URL)
+        cur = con.cursor()
+
+        query = """INSERT INTO test_db('Name','Age') VALUES ('Ashish',20) """
+
+        
+        pd.read_sql(query, con)
+    finally:
+        # close the communication with the database server by calling the close()
+        if con is not None:
+            con.close()
+            print('Database connection closed.')
+    
+    return ("INSERTED")
 
 
 
