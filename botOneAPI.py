@@ -1,7 +1,6 @@
 from flask import Flask;
 from flask import request,redirect;
 import config.constants as const;
-from flask_sqlalchemy import SQLAlchemy;
 from botOneFun import test_read,read_balance,add_account,create_table,update_balance
 
 DATABASE_URL=const.DATABASE_URL
@@ -11,11 +10,7 @@ if DATABASE_URL.startswith("postgres://"):
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI']=DATABASE_URL
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
-app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {"pool_size": 20}
 
-db = SQLAlchemy(app)
 
 
 @app.route('/test',methods = ['GET'])
