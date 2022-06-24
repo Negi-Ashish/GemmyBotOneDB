@@ -2,7 +2,7 @@ from flask import Flask;
 from flask import request,redirect;
 import config.constants as const;
 from flask_sqlalchemy import SQLAlchemy;
-import psycopg2
+from botOneFun import test_read,read_balance,test_write,test_update,create_table
 
 DATABASE_URL=const.DATABASE_URL
 
@@ -34,7 +34,6 @@ async def test_function_four():
     try:
         if request.method=="POST":
             data = request.json
-            print(data)
             return await test_write(data['userId'],data['walletBalance'],data['bankBalance'])
     except:
         return "Wrong json format"
@@ -49,74 +48,14 @@ async def test_function_six():
     if request.method=="POST":
         return await create_table()
 
-
-async def test_read():
+@app.route('/read_balance',methods = ['GET'])
+async def read_balance():
     try:
-        con = psycopg2.connect(DATABASE_URL)
-        cur = con.cursor()
-        query = f"""SELECT * FROM user_account """        
-        cur.execute(query)
-        con.commit()
-        record = cur.fetchall()
-        print(record)
-    finally:
-        if con is not None:
-            con.close()
-    return "SUCCESS"
-
-
-
-async def test_write(userID,walletBalance,bankBalance):
-    try:
-        con = psycopg2.connect(DATABASE_URL)
-        cur = con.cursor()
-        query = f"""INSERT INTO user_account("user_id","wallet_balance","bank_balance") VALUES('{userID}',{walletBalance},{bankBalance}) """
-        cur.execute(query)
-        con.commit()
+        if request.method=="GET":
+            userID=request.GET.get('userID')
+            return await read_balance(userID)
     except:
-        return "User alredy Exists"
-    finally:
-        # close the communication with the database server by calling the close()
-        if con is not None:
-            con.close()
-
-
-    return ("INSERTED")
-
-
-async def test_update():
-    try:
-        con = psycopg2.connect(DATABASE_URL)
-        cur = con.cursor()
-        query = """UPDATE user_account SET "wallet_balance"='200' Where ("user_id"='Ashish');"""
-        cur.execute(query)
-        con.commit()
-    finally:
-        # close the communication with the database server by calling the close()
-        if con is not None:
-            con.close()
-    return ("UPDATED")
-
-
-
-def create_table():
-    try:
-        con = psycopg2.connect(DATABASE_URL)
-        cur = con.cursor()
-
-        query = """CREATE TABLE user_account(
-                    user_id VARCHAR (20) PRIMARY KEY,
-                    wallet_balance INT NOT NULL,
-                    bank_balance INT NOT NULL,
-                    earn_start TIMESTAMP
-                    );"""
-        cur.execute(query)
-        con.commit()
-    finally:
-        if con is not None:
-            con.close()
-    return ("Created")
-
+        return "ERROR"
 
 
 
