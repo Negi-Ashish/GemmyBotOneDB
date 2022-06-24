@@ -165,7 +165,7 @@ def create_table():
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
 
-        query = """CREATE TABLE [IF NOT EXISTS] user_account(
+        query = """CREATE TABLE user_account(
                     user_id VARCHAR (20) PRIMARY KEY,
                     wallet_balance INT NOT NULL,
                     bank_balance INT NOT NULL,
