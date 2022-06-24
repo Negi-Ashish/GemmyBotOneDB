@@ -7,6 +7,7 @@ import psycopg2
 
 
 
+
 DATABASE_URL=const.DATABASE_URL
 
 if DATABASE_URL.startswith("postgres://"):
@@ -14,9 +15,10 @@ if DATABASE_URL.startswith("postgres://"):
 
 app = Flask(__name__)
 db = SQLAlchemy(app)
-# app.config['SQLALCHEMY_DATABASE_URI']=DATABASE_URL
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 
+
+app.config['SQLALCHEMY_DATABASE_URI']=DATABASE_URL
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 
 
 class UserAccountModal(db.Model):
