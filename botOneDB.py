@@ -3,7 +3,6 @@ from flask import request,redirect;
 import config.constants as const;
 from flask_sqlalchemy import SQLAlchemy;
 import psycopg2
-import asyncio
 
 DATABASE_URL=const.DATABASE_URL
 
