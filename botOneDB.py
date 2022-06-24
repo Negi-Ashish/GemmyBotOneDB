@@ -24,16 +24,16 @@ app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {"pool_size": 20}
 db = SQLAlchemy(app)
 
 
-class UserAccountModal(db.Model):
-    __tablename__ = 'user_account_modal'
-    discordId = db.Column(db.String(50),primary_key=True)
-    bank_balance = db.Column(db.Integer)
-    wallet_balance = db.Column(db.Integer)
+# class UserAccountModal(db.Model):
+#     __tablename__ = 'user_account_modal'
+#     discordId = db.Column(db.String(50),primary_key=True)
+#     bank_balance = db.Column(db.Integer)
+#     wallet_balance = db.Column(db.Integer)
 
-    def __init__(self,discordId,bank_balance,wallet_balance):
-        self.discordId = discordId
-        self.bank_balance=bank_balance
-        self.wallet_balance=wallet_balance
+#     def __init__(self,discordId,bank_balance,wallet_balance):
+#         self.discordId = discordId
+#         self.bank_balance=bank_balance
+#         self.wallet_balance=wallet_balance
 
 
 # def post_db(id,bank,wallet):
@@ -70,15 +70,19 @@ def test_function_five():
     if request.method=="PUT":
         return test_update()
 
+@app.route('/test_create',methods = ['POST'])
+def test_function_six():
+    if request.method=="POST":
+        return create_table()
+
 
 def test_read():
     try:
-
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
 
         query = f"""SELECT * 
-                    FROM test_db"""        
+                    FROM user_account"""        
         # results = pd.read_sql(query, con).set_index('name')
         # print("typerOF",type(results))
         # print(results)
@@ -106,7 +110,7 @@ def test_write():
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
 
-        query = """INSERT INTO test_db("name","age") VALUES('Ashish',20) """
+        query = """INSERT INTO user_account("user_id","wallet_balance","bank_balance") VALUES('Ashish',20,10) """
 
         cur.execute(query)
         con.commit()
@@ -153,6 +157,31 @@ def test_function():
     print(df)
     df.to_sql('test_db', con = engine, if_exists='append')
     return "NOT FAIL"
+
+
+
+def create_table():
+    try:
+        con = psycopg2.connect(DATABASE_URL)
+        cur = con.cursor()
+
+        query = """CREATE TABLE [IF NOT EXISTS] user_account(
+                    user_id VARCHAR (20) PRIMARY KEY,
+                    wallet_balance INT NOT NULL,
+                    bank_balance INT NOT NULL,
+                    earn_start TIMESTAMP
+                    );"""
+        cur.execute(query)
+        con.commit()
+
+        
+    finally:
+        if con is not None:
+            con.close()
+            print('Database connection closed.')
+    
+    return ("Created")
+
 
 
 
