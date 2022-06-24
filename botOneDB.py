@@ -48,7 +48,7 @@ async def test_function_six():
         return await create_table()
 
 
-async def test_read():
+def test_read():
     try:
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
@@ -64,7 +64,7 @@ async def test_read():
 
 
 
-async def test_write():
+def test_write():
     try:
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
@@ -78,7 +78,7 @@ async def test_write():
     return ("INSERTED")
 
 
-async def test_update():
+def test_update():
     try:
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
@@ -93,7 +93,7 @@ async def test_update():
 
 
 
-async def create_table():
+def create_table():
     try:
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
