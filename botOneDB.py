@@ -52,7 +52,7 @@ async def test_function_six():
 async def read_balance():
     try:
         if request.method=="GET":
-            userID=request.GET.get('userID')
+            userID = request.args.get('userID')
             return await read_balance(userID)
     except:
         return "ERROR"
