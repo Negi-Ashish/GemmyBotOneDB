@@ -71,7 +71,7 @@ def test_read():
         query = f"""SELECT * 
                     FROM test_db"""
 
-        results = pd.read_sql(query, con)
+        results = pd.read_sql(query, con).set_index('Name')
         print("typerOF",type(results))
         print(results)
     finally:
