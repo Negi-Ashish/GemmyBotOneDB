@@ -50,12 +50,10 @@ async def test_function_six():
 
 @app.route('/read_balance',methods = ['GET'])
 async def read_balance():
-    try:
-        if request.method=="GET":
-            userID = request.args.get('userID')
-            return await read_balance(userID)
-    except:
-        return "ERROR"
+    if request.method=="GET":
+        userID = request.args.get('userID')
+        return await read_balance(userID)
+
 
 
 
