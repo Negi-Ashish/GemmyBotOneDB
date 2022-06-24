@@ -58,7 +58,7 @@ async def read_balances():
         return "ERROR"
 
 @app.route('/update_balances',methods = ['PUT'])
-async def test_function_five():
+async def update_balances():
     try:
         if request.method=="PUT":
             data = request.json
