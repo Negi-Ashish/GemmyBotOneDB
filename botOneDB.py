@@ -35,6 +35,7 @@ def test_function_four():
     if request.method=="POST":
         data = request.json
         print(data)
+        print(type(data))
         return test_write()
 
 @app.route('/test_update',methods = ['PUT'])
@@ -68,7 +69,7 @@ def test_write():
     try:
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
-        query = """INSERT INTO user_account("user_id","wallet_balance","bank_balance") VALUES('Ashish',20,10) """
+        query = """INSERT INTO user_account("user_id","wallet_balance","bank_balance") VALUES('Anjali',20,100) """
         cur.execute(query)
         con.commit()
     finally:
