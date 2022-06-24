@@ -55,7 +55,7 @@ def test_function_two():
 
 
 def test_function():
-    engine = db.create_engine(DATABASE_URL)
+    engine = db.create_engine(DATABASE_URL,{"pool_size": 20})
     data = {'Name': ['Tom', 'Joseph', 'Krish', 'John'], 'Age': [20, 21, 19, 18]}  
     df = pd.DataFrame(data)  
     df.to_sql('test_db', con = engine, if_exists='append')
