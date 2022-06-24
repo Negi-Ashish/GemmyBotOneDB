@@ -86,7 +86,7 @@ def test_read():
 
 def test_function():
     engine = db.create_engine(DATABASE_URL,{"pool_size": 20})
-    data = {'Name': ['Tom', 'Joseph', 'Krish', 'John'], 'Age': [20, 21, 19, 18]}  
+    data = {'Name': ['John'], 'Age': [20]}  
     df = pd.DataFrame(data).set_index('Name')
     print(df)
     df.to_sql('test_db', con = engine, if_exists='append')
