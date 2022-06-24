@@ -5,17 +5,12 @@ from flask_sqlalchemy import SQLAlchemy;
 import pandas as pd 
 import psycopg2
 
-
-
-
 DATABASE_URL=const.DATABASE_URL
 
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
 app = Flask(__name__)
-
-
 
 app.config['SQLALCHEMY_DATABASE_URI']=DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
@@ -38,6 +33,8 @@ def test_function_three():
 @app.route('/test_write',methods = ['POST'])
 def test_function_four():
     if request.method=="POST":
+        data = request.json
+        print(data)
         return test_write()
 
 @app.route('/test_update',methods = ['PUT'])
@@ -55,7 +52,7 @@ def test_read():
     try:
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
-        query = f"""SELECT * FROM user_account"""        
+        query = f"""SELECT * FROM user_account """        
         cur.execute(query)
         con.commit()
         record = cur.fetchall()
