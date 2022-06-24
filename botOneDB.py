@@ -84,7 +84,7 @@ def test_read():
         # print(results)
         cur.execute(query)
         con.commit()
-        record = cursor.fetchone()
+        record = cur.fetchone()
         print(record)
 
 
