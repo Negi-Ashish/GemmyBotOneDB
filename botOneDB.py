@@ -24,25 +24,6 @@ app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {"pool_size": 20}
 db = SQLAlchemy(app)
 
 
-# class UserAccountModal(db.Model):
-#     __tablename__ = 'user_account_modal'
-#     discordId = db.Column(db.String(50),primary_key=True)
-#     bank_balance = db.Column(db.Integer)
-#     wallet_balance = db.Column(db.Integer)
-
-#     def __init__(self,discordId,bank_balance,wallet_balance):
-#         self.discordId = discordId
-#         self.bank_balance=bank_balance
-#         self.wallet_balance=wallet_balance
-
-
-# def post_db(id,bank,wallet):
-#     data = UserAccountModal(id,bank,wallet)
-#     db.session.add(data)
-#     db.session.commit()
-#     return "Success"
-
-
 @app.route('/test',methods = ['GET'])
 def test_function_one():
     if request.method=="GET":
@@ -74,42 +55,25 @@ def test_read():
     try:
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
-
-        query = f"""SELECT * 
-                    FROM user_account"""        
-        # results = pd.read_sql(query, con).set_index('name')
-        # print("typerOF",type(results))
-        # print(results)
+        query = f"""SELECT * FROM user_account"""        
         cur.execute(query)
         con.commit()
         record = cur.fetchall()
         print(record)
-
-
     finally:
-        # close the communication with the database server by calling the close()
         if con is not None:
             con.close()
-            
-    
-    return ("PASSED")
-
-
+    return record
 
 
 
 def test_write():
     try:
-
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
-
         query = """INSERT INTO user_account("user_id","wallet_balance","bank_balance") VALUES('Ashish',20,10) """
-
         cur.execute(query)
         con.commit()
-
-        
     finally:
         # close the communication with the database server by calling the close()
         if con is not None:
@@ -117,37 +81,18 @@ def test_write():
     return ("INSERTED")
 
 
-
-
 def test_update():
     try:
-
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
-
         query = """UPDATE user_account SET "wallet_balance"='200' Where ("user_id"='Ashish');"""
-
         cur.execute(query)
         con.commit()
-        
-        
     finally:
         # close the communication with the database server by calling the close()
         if con is not None:
             con.close()
-    
     return ("UPDATED")
-
-
-
-
-# def test_function():
-#     engine = db.create_engine(DATABASE_URL,{"pool_size": 20})
-#     data = {'name': ['John'], 'age': [20]}  
-#     df = pd.DataFrame(data).set_index('name')
-#     print(df)
-#     df.to_sql('test_db', con = engine, if_exists='append')
-#     return "NOT FAIL"
 
 
 
@@ -164,13 +109,9 @@ def create_table():
                     );"""
         cur.execute(query)
         con.commit()
-
-        
     finally:
         if con is not None:
             con.close()
-            
-    
     return ("Created")
 
 
