@@ -49,7 +49,7 @@ async def test_function_six():
         return await create_table()
 
 @app.route('/read_balance',methods = ['GET'])
-async def read_balance():
+async def read_balances():
     if request.method=="GET":
         userID = request.args.get('userID')
         return await read_balance(userID)
