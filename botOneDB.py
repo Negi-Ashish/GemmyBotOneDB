@@ -55,7 +55,7 @@ async def test_read():
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
         query = f"""SELECT * FROM user_account """        
-        await cur.execute(query)
+        cur.execute(query)
         con.commit()
         record = cur.fetchall()
         print(record)
