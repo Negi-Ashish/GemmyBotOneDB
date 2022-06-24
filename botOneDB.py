@@ -55,10 +55,11 @@ def test_function_two():
 
 
 def test_function():
-    engine = db.create_engine(DATABASE_URL, echo = False)
+    engine = db.create_engine(DATABASE_URL)
     data = {'Name': ['Tom', 'Joseph', 'Krish', 'John'], 'Age': [20, 21, 19, 18]}  
     df = pd.DataFrame(data)  
     df.to_sql('test_db', con = engine, if_exists='append')
+    return "NOT FAIL"
 
 
 
