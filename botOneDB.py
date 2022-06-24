@@ -34,6 +34,7 @@ async def test_function_four():
     try:
         if request.method=="POST":
             data = request.json
+            print(data)
             return await test_write(data['userId'],data['walletBalance'],data['bankBalance'])
     except:
         return "Wrong json format"
@@ -49,12 +50,12 @@ async def test_function_six():
         return await create_table()
 
 
-def test_read():
+async def test_read():
     try:
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
         query = f"""SELECT * FROM user_account """        
-        cur.execute(query)
+        await cur.execute(query)
         con.commit()
         record = cur.fetchall()
         print(record)
