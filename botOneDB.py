@@ -14,14 +14,14 @@ if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
 app = Flask(__name__)
-db = SQLAlchemy(app)
+
 
 
 app.config['SQLALCHEMY_DATABASE_URI']=DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {"pool_size": 20}
 
-
+db = SQLAlchemy(app)
 
 
 class UserAccountModal(db.Model):
