@@ -98,7 +98,7 @@ def test_write():
 
         cur.execute(query)
         con.commit()
-        
+
         
     finally:
         # close the communication with the database server by calling the close()
@@ -107,6 +107,30 @@ def test_write():
             print('Database connection closed.')
     
     return ("INSERTED")
+
+
+
+
+def test_update():
+    try:
+
+        con = psycopg2.connect(DATABASE_URL)
+        cur = con.cursor()
+
+        query = """UPDATE test_db SET Age=111 Where Name=John"""
+
+        cur.execute(query)
+        con.commit()
+        
+        
+    finally:
+        # close the communication with the database server by calling the close()
+        if con is not None:
+            con.close()
+            print('Database connection closed.')
+    
+    return ("UPDATED")
+
 
 
 
