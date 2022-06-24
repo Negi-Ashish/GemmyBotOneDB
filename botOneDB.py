@@ -13,7 +13,7 @@ if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
 app = Flask(__name__)
-
+db = SQLAlchemy(app)
 # app.config['SQLALCHEMY_DATABASE_URI']=DATABASE_URL
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 
@@ -53,7 +53,6 @@ def AssignRole_Discord():
 
 
 def test_function():
-    db = SQLAlchemy(app)
     engine = db.create_engine(DATABASE_URL, echo = False)
     data = {'Name': ['Tom', 'Joseph', 'Krish', 'John'], 'Age': [20, 21, 19, 18]}  
     df = pd.DataFrame(data)  
