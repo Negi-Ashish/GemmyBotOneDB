@@ -79,7 +79,7 @@ def test_read():
 
         query = f"""SELECT * 
                     FROM test_db"""        
-        results = pd.read_sql(query, con).set_index('Name')
+        results = pd.read_sql(query, con).set_index('name')
         print("typerOF",type(results))
         print(results)
     finally:
@@ -100,7 +100,7 @@ def test_write():
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
 
-        query = """INSERT INTO test_db("Name","Age") VALUES('Ashish',20) """
+        query = """INSERT INTO test_db("name","age") VALUES('Ashish',20) """
 
         cur.execute(query)
         con.commit()
@@ -123,7 +123,7 @@ def test_update():
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
 
-        query = """UPDATE test_db SET Name="John" Where Age="20";"""
+        query = """UPDATE test_db SET name="John" Where age="20";"""
 
         cur.execute(query)
         con.commit()
@@ -142,8 +142,8 @@ def test_update():
 
 def test_function():
     engine = db.create_engine(DATABASE_URL,{"pool_size": 20})
-    data = {'Name': ['John'], 'Age': [20]}  
-    df = pd.DataFrame(data).set_index('Name')
+    data = {'name': ['John'], 'age': [20]}  
+    df = pd.DataFrame(data).set_index('name')
     print(df)
     df.to_sql('test_db', con = engine, if_exists='append')
     return "NOT FAIL"
