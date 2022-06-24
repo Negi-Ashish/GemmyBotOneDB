@@ -39,13 +39,13 @@ class UserAccountModal(db.Model):
 
 
 @app.route('/test',methods = ['GET'])
-def AssignRole_Discord():
+def test_function_one():
     if request.method=="GET":
         return "Success"
 
 
 @app.route('/test_function',methods = ['GET'])
-def AssignRole_Discord():
+def test_function_two():
     if request.method=="GET":
         return test_function()
 
