@@ -31,11 +31,12 @@ async def test_function_three():
 
 @app.route('/test_write',methods = ['POST'])
 async def test_function_four():
-    if request.method=="POST":
-        data = request.json
-        print(data)
-        print(type(data))
-        return await test_write()
+    try:
+        if request.method=="POST":
+            data = request.json
+            return await test_write(data['userId'],data['walletBalance'],data['bankBalance'])
+    except:
+        return "Wrong json format"
 
 @app.route('/test_update',methods = ['PUT'])
 async def test_function_five():
@@ -64,17 +65,21 @@ def test_read():
 
 
 
-def test_write():
+def test_write(userID,walletBalance,bankBalance):
     try:
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
-        query = """INSERT INTO user_account("user_id","wallet_balance","bank_balance") VALUES('Anjali',20,100) """
+        query = f"""INSERT INTO user_account("user_id","wallet_balance","bank_balance") VALUES('{userID}',{walletBalance},{bankBalance}) """
         cur.execute(query)
         con.commit()
+    except:
+        return "User alredy Exists"
     finally:
         # close the communication with the database server by calling the close()
         if con is not None:
             con.close()
+
+
     return ("INSERTED")
 
 
