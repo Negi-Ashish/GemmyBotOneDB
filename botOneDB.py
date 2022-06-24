@@ -80,7 +80,7 @@ def test_read():
             con.close()
             print('Database connection closed.')
     
-    return ("PASSED",results)
+    return ("PASSED")
 
 
 
