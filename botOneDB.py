@@ -26,30 +26,30 @@ def test_function_one():
 
 
 @app.route('/test_read',methods = ['GET'])
-def test_function_three():
+async def test_function_three():
     if request.method=="GET":
-        return test_read()
+        return await test_read()
 
 @app.route('/test_write',methods = ['POST'])
-def test_function_four():
+async def test_function_four():
     if request.method=="POST":
         data = request.json
         print(data)
         print(type(data))
-        return test_write()
+        return await test_write()
 
 @app.route('/test_update',methods = ['PUT'])
-def test_function_five():
+async def test_function_five():
     if request.method=="PUT":
-        return test_update()
+        return await test_update()
 
 @app.route('/test_create',methods = ['POST'])
-def test_function_six():
+async def test_function_six():
     if request.method=="POST":
-        return create_table()
+        return await create_table()
 
 
-def test_read():
+async def test_read():
     try:
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
@@ -61,11 +61,11 @@ def test_read():
     finally:
         if con is not None:
             con.close()
-    return record
+    return "SUCCESS"
 
 
 
-def test_write():
+async def test_write():
     try:
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
@@ -79,7 +79,7 @@ def test_write():
     return ("INSERTED")
 
 
-def test_update():
+async def test_update():
     try:
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
@@ -94,7 +94,7 @@ def test_update():
 
 
 
-def create_table():
+async def create_table():
     try:
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
