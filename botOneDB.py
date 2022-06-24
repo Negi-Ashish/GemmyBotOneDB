@@ -96,8 +96,10 @@ def test_write():
 
         query = """INSERT INTO test_db("Name","Age") VALUES('Ashish',20) """
 
+        cur.execute(query)
+        con.commit()
         
-        pd.read_sql(query, con)
+        
     finally:
         # close the communication with the database server by calling the close()
         if con is not None:
