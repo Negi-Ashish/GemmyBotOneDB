@@ -79,6 +79,8 @@ def test_read():
         if con is not None:
             con.close()
             print('Database connection closed.')
+    
+    return "PASSED"
 
 
 
