@@ -65,6 +65,12 @@ def test_function_four():
     if request.method=="POST":
         return test_write()
 
+@app.route('/test_update',methods = ['POST'])
+def test_function_five():
+    if request.method=="PUT":
+        return test_update()
+
+
 def test_read():
     try:
 
