@@ -21,6 +21,9 @@ app.config['SQLALCHEMY_DATABASE_URI']=DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {"pool_size": 20}
 
+
+
+
 class UserAccountModal(db.Model):
     __tablename__ = 'user_account_modal'
     discordId = db.Column(db.String(50),primary_key=True)
@@ -51,6 +54,31 @@ def test_function_two():
     if request.method=="GET":
         return test_function()
 
+
+@app.route('/test_read',methods = ['GET'])
+def test_function_three():
+    if request.method=="GET":
+        return test_read()
+
+
+
+def test_read():
+    try:
+
+        con = psycopg2.connect(DATABASE_URL)
+        cur = con.cursor()
+
+        query = f"""SELECT * 
+                    FROM test_db"""
+
+        results = pd.read_sql(query, con)
+
+        print(results)
+    finally:
+        # close the communication with the database server by calling the close()
+        if con is not None:
+            con.close()
+            print('Database connection closed.')
 
 
 
