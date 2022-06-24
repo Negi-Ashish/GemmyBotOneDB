@@ -24,35 +24,6 @@ async def test_read():
 
 
 
-async def test_write(userID,walletBalance,bankBalance):
-    try:
-        con = psycopg2.connect(DATABASE_URL)
-        cur = con.cursor()
-        query = f"""INSERT INTO user_account("user_id","wallet_balance","bank_balance") VALUES('{userID}',{walletBalance},{bankBalance}) """
-        cur.execute(query)
-        con.commit()
-    except:
-        return "User alredy Exists"
-    finally:
-        if con is not None:
-            con.close()
-    return ("INSERTED")
-
-
-async def test_update():
-    try:
-        con = psycopg2.connect(DATABASE_URL)
-        cur = con.cursor()
-        query = """UPDATE user_account SET "wallet_balance"='200' Where ("user_id"='Ashish');"""
-        cur.execute(query)
-        con.commit()
-    finally:
-        if con is not None:
-            con.close()
-    return ("UPDATED")
-
-
-
 def create_table():
     try:
         con = psycopg2.connect(DATABASE_URL)
@@ -70,6 +41,23 @@ def create_table():
         if con is not None:
             con.close()
     return ("Created")
+
+##################################################################################################
+
+async def add_account(userID,walletBalance,bankBalance):
+    try:
+        con = psycopg2.connect(DATABASE_URL)
+        cur = con.cursor()
+        query = f"""INSERT INTO user_account("user_id","wallet_balance","bank_balance") VALUES('{userID}',{walletBalance},{bankBalance}) """
+        cur.execute(query)
+        con.commit()
+    except:
+        return "User alredy Exists"
+    finally:
+        if con is not None:
+            con.close()
+    return ("INSERTED")
+
 
 async def read_balance(userID):
     try:
