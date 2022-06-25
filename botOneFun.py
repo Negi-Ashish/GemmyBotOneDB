@@ -1,7 +1,7 @@
 from logging import exception
 import psycopg2
 import config.constants as const;
-
+from datetime import datetime
 
 DATABASE_URL=const.DATABASE_URL
 
@@ -108,3 +108,20 @@ async def update_balance(userID,walletBalance,bankBalance):
     finally:
         if con is not None:
             con.close()
+
+
+
+async def account_earn(userID):
+    try:
+        dt = datetime.now()
+        con = psycopg2.connect(DATABASE_URL)
+        cur = con.cursor()
+        query = f"""UPDATE user_account SET "earn_start"='{dt}' Where ("user_id"='{userID}') """
+        cur.execute(query)
+        con.commit()
+    except:
+        return {"update":False,"Error":"User alredy exists"}
+    finally:
+        if con is not None:
+            con.close()
+    return {"update":True}

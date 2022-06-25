@@ -1,7 +1,7 @@
 from flask import Flask;
 from flask import request,redirect;
 import config.constants as const;
-from botOneFun import test_read,read_balance,add_account,create_table,update_balance,check_existance
+from botOneFun import test_read,read_balance,add_account,create_table,update_balance,check_existance,account_earn
 
 DATABASE_URL=const.DATABASE_URL
 
@@ -78,6 +78,16 @@ async def updateBalance():
             return await update_balance(data['userId'],data['walletBalance'],data['bankBalance'])
     except:
         return "Wrong json format"
+
+
+@app.route('/account_earn',methods = ['PUT'])
+async def earnGem():
+    try:
+        if request.method=="PUT":
+            userID = request.args.get('userID')
+            return await account_earn(userID)
+    except:
+        return "ERROR"
 
 if __name__ == "__main__":
     app.run(debug=True)
