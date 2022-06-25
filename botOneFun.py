@@ -1,3 +1,4 @@
+from logging import exception
 import psycopg2
 import config.constants as const;
 
@@ -54,6 +55,8 @@ async def check_existance(userID):
         record = cur.fetchone()[0]
         if record == 0:
             return {"existance":False}
+    except:
+        return {"existance":False,"Error":"User alredy exists"}
     finally:
         if con is not None:
             con.close()
@@ -68,11 +71,11 @@ async def add_account(userID,walletBalance,bankBalance):
         cur.execute(query)
         con.commit()
     except:
-        return "User alredy Exists"
+        return {"inserted":False,"Error":"User alredy exists"}
     finally:
         if con is not None:
             con.close()
-    return ("INSERTED")
+    return {"inserted":True}
 
 
 async def read_balance(userID):
@@ -86,7 +89,7 @@ async def read_balance(userID):
         print(record)
         return {"wallet_balance":record[0],"bank_balance":record[1]}
     except:
-        print("ERROR in read_balance")
+        return {"wallet_balance":"FAILURE","bank_balance":"FAILURE","error":"No such Id exists"}
     finally:
         if con is not None:
             con.close()
@@ -99,7 +102,9 @@ async def update_balance(userID,walletBalance,bankBalance):
         query = f"""UPDATE user_account SET "wallet_balance"='{walletBalance}',"bank_balance"='{bankBalance}' Where ("user_id"='{userID}');"""
         cur.execute(query)
         con.commit()
+        return {"updated":True}
+    except:
+        return {"updated":False,"Error":"update_balance error"}
     finally:
         if con is not None:
             con.close()
-    return ("UPDATED")
