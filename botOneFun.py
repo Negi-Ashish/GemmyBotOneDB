@@ -132,8 +132,8 @@ async def account_earn(userID):
             date_time_delta = record+timedelta(hours = 4)
             print("TIME DELTA",date_time_delta)
             if(date_time_delta>=datetime.now()):
-                hours = date_time_delta-datetime.now()
-                return {"message":f"""You can claim reward after {hours} hours."""}
+                remaining_time = date_time_delta-datetime.now()
+                return {"message":f"""You can claim reward after {remaining_time.hour}hr and {remaining_time.minute}min."""}
 
     except:
         return {"update":False,"Error":"User alredy exists"}
