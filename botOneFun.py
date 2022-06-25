@@ -2,7 +2,7 @@ import psycopg2
 import config.constants as const;
 from datetime import datetime,timedelta
 import random;
-
+from config.fortune import fortune_dict
 
 DATABASE_URL=const.DATABASE_URL
 
@@ -143,3 +143,8 @@ async def account_earn(userID):
     finally:
         if con is not None:
             con.close()
+
+
+async def fortune_teller():
+    random_number = random.randrange(50)
+    return fortune_dict[random_number]

@@ -1,7 +1,7 @@
 from flask import Flask;
 from flask import request,redirect;
 import config.constants as const;
-from botOneFun import test_read,read_balance,add_account,create_table,update_balance,check_existance,account_earn
+from botOneFun import test_read,read_balance,add_account,create_table,update_balance,check_existance,account_earn,fortune_teller
 
 DATABASE_URL=const.DATABASE_URL
 
@@ -88,6 +88,16 @@ async def earnGem():
             return await account_earn(userID)
     except:
         return "ERROR"
+
+
+@app.route('/fortune',methods = ['GET'])
+async def fortune():
+    try:
+        if request.method=="GET":
+            return await fortune_teller()
+    except:
+        return "Fortune error"
+
 
 if __name__ == "__main__":
     app.run(debug=True)
