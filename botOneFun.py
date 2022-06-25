@@ -117,7 +117,8 @@ async def account_earn(userID):
         cur.execute(query_read)
         con.commit()
         record = cur.fetchone()
-        print(record)
+
+        print("DATE",record)
 
         dt = datetime.now()
         con = psycopg2.connect(DATABASE_URL)
