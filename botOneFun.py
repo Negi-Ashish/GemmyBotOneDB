@@ -51,7 +51,7 @@ async def check_existance(userID):
         query = f"""SELECT COUNT("user_id") FROM user_account Where ("user_id"='{userID}')"""        
         cur.execute(query)
         con.commit()
-        record = cur.fetchone()
+        record = cur.fetchone()[0]
         print(record)
     finally:
         if con is not None:
