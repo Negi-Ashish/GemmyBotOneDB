@@ -133,6 +133,9 @@ async def account_earn(userID):
             print("TIME DELTA",date_time_delta)
             if(date_time_delta>=datetime.now()):
                 remaining_time = date_time_delta-datetime.now()
+                print(remaining_time)
+                print(type(remaining_time))
+                print(remaining_time.hour)
                 return {"message":f"""You can claim reward after {remaining_time.hour}hr and {remaining_time.minute}min."""}
 
     except:
