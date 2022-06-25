@@ -1,4 +1,3 @@
-from logging import exception
 import psycopg2
 import config.constants as const;
 from datetime import datetime
@@ -113,9 +112,16 @@ async def update_balance(userID,walletBalance,bankBalance):
 
 async def account_earn(userID):
     try:
+        cur = con.cursor()
+        query_read = f"""SELECT "earn_start" FROM user_account Where ("user_id"='{userID}')"""
+        cur.execute(query)
+        con.commit()
+        record = cur.fetchone()
+        print(record)
+
         dt = datetime.now()
         con = psycopg2.connect(DATABASE_URL)
-        cur = con.cursor()
+        
         query = f"""UPDATE user_account SET "earn_start"='{dt}' Where ("user_id"='{userID}') """
         cur.execute(query)
         con.commit()
