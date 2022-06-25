@@ -52,11 +52,12 @@ async def check_existance(userID):
         cur.execute(query)
         con.commit()
         record = cur.fetchone()[0]
-        print(record)
+        if record == 0:
+            return False
     finally:
         if con is not None:
             con.close()
-    return "SUCCESS"
+    return True
 
 
 async def add_account(userID,walletBalance,bankBalance):
