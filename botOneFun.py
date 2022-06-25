@@ -119,7 +119,8 @@ async def account_earn(userID):
         con.commit()
         record = cur.fetchone()
 
-        print("DATE",record)
+        print("DATE",record[0])
+        print(type(record[0]))
 
         dt = datetime.now()
         
