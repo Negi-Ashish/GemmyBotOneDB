@@ -1,6 +1,6 @@
 import psycopg2
 import config.constants as const;
-from datetime import datetime
+from datetime import datetime,timedelta
 
 DATABASE_URL=const.DATABASE_URL
 
@@ -117,20 +117,25 @@ async def account_earn(userID):
         query_read = f"""SELECT "earn_start" FROM user_account Where ("user_id"='{userID}')"""
         cur.execute(query_read)
         con.commit()
-        record = cur.fetchone()
+        record = cur.fetchone()[0]
 
-        print("DATE",record[0])
-        print(type(record[0]))
+        print("Old Time Stamp",record)
+        print(type(record))
 
-        dt = datetime.now()
-        
-        
-        query = f"""UPDATE user_account SET "earn_start"='{dt}' Where ("user_id"='{userID}') """
-        cur.execute(query)
-        con.commit()
+        if record == None:
+            dt = datetime.now()
+            query = f"""UPDATE user_account SET "earn_start"='{dt}' Where ("user_id"='{userID}') """
+            cur.execute(query)
+            con.commit()
+            return {"message":"You have started earning come after 5 hours to claim."}
+        else:
+            date_time_delta = record-timedelta(hours = 4)
+            if(date_time_delta<=datetime.now()):
+                hours = date_time_delta-datetime.now()
+                return {"message":f"""You can claim reward after {hours} hours."""}
+
     except:
         return {"update":False,"Error":"User alredy exists"}
     finally:
         if con is not None:
             con.close()
-    return {"update":True}
