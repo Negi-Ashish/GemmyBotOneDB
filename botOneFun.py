@@ -130,6 +130,7 @@ async def account_earn(userID):
             return {"message":"You have started earning come after 5 hours to claim."}
         else:
             date_time_delta = record-timedelta(hours = 4)
+            print("TIME DELTA",date_time_delta)
             if(date_time_delta<=datetime.now()):
                 hours = date_time_delta-datetime.now()
                 return {"message":f"""You can claim reward after {hours} hours."""}
