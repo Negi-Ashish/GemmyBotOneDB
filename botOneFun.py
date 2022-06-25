@@ -114,7 +114,7 @@ async def account_earn(userID):
     try:
         cur = con.cursor()
         query_read = f"""SELECT "earn_start" FROM user_account Where ("user_id"='{userID}')"""
-        cur.execute(query)
+        cur.execute(query_read)
         con.commit()
         record = cur.fetchone()
         print(record)
