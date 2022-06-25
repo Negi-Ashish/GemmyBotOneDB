@@ -1,6 +1,8 @@
 import psycopg2
 import config.constants as const;
 from datetime import datetime,timedelta
+import random;
+
 
 DATABASE_URL=const.DATABASE_URL
 
@@ -131,9 +133,14 @@ async def account_earn(userID):
         else:
             date_time_delta = record+timedelta(hours = 4)
             if(date_time_delta>=datetime.now()):
-                remaining_time = date_time_delta-datetime.now()
-                return {"message":f"""You can claim reward after {remaining_time.seconds//3600}hr and {(remaining_time.seconds//60)%60}min."""}
-
+            #     remaining_time = date_time_delta-datetime.now()
+            #     return {"message":f"""You can claim reward after {remaining_time.seconds//3600}hr and {(remaining_time.seconds//60)%60}min."""}
+            # else:
+                random_amount = random.randrange(101)
+                query = f"""UPDATE user_account SET "wallet_balance"=("wallet_balance"+'{random_amount}') Where ("user_id"='{userID}') """
+                cur.execute(query)
+                con.commit()
+                return {"message":f"""You have earned {random_amount} gems"""}
     except:
         return {"update":False,"Error":"User alredy exists"}
     finally:
