@@ -112,6 +112,7 @@ async def update_balance(userID,walletBalance,bankBalance):
 
 async def account_earn(userID):
     try:
+        con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
         query_read = f"""SELECT "earn_start" FROM user_account Where ("user_id"='{userID}')"""
         cur.execute(query_read)
@@ -121,7 +122,7 @@ async def account_earn(userID):
         print("DATE",record)
 
         dt = datetime.now()
-        con = psycopg2.connect(DATABASE_URL)
+        
         
         query = f"""UPDATE user_account SET "earn_start"='{dt}' Where ("user_id"='{userID}') """
         cur.execute(query)
