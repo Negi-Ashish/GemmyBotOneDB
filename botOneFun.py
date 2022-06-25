@@ -84,12 +84,13 @@ async def read_balance(userID):
         con.commit()
         record = cur.fetchone()
         print(record)
+        return {"wallet_balance":record[0],"bank_balance":record[1]}
     except:
         print("ERROR in read_balance")
     finally:
         if con is not None:
             con.close()
-    return record
+
 
 async def update_balance(userID,walletBalance,bankBalance):
     try:
