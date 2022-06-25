@@ -127,12 +127,12 @@ async def account_earn(userID):
             query = f"""UPDATE user_account SET "earn_start"='{dt}' Where ("user_id"='{userID}') """
             cur.execute(query)
             con.commit()
-            return {"message":"You have started earning come after 4 hours to claim."}
+            return {"message":"You have started earning gems come after 4 hours to claim."}
         else:
             date_time_delta = record+timedelta(hours = 4)
             if(date_time_delta>=datetime.now()):
                 remaining_time = date_time_delta-datetime.now()
-                return {"message":f"""You can claim reward after {remaining_time.seconds//3600}hr and {(remaining_time.seconds//60)%60}min."""}
+                return {"message":f"""You can claim your gems after {remaining_time.seconds//3600}hr and {(remaining_time.seconds//60)%60}min."""}
             else:
                 random_amount = random.randrange(101)
                 query = f"""UPDATE user_account SET "wallet_balance"=("wallet_balance"+'{random_amount}') Where ("user_id"='{userID}') """
@@ -140,7 +140,7 @@ async def account_earn(userID):
                 con.commit()
                 return {"message":f"""You have earned {random_amount} gems"""}
     except:
-        return {"message":"There was an issue with your earnings please contact a MOD","Error":"account_earn"}
+        return {"message":"There was an issue with your gem earnings please contact a MOD","Error":"account_earn"}
     finally:
         if con is not None:
             con.close()
