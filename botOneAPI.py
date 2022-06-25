@@ -1,7 +1,7 @@
 from flask import Flask;
 from flask import request,redirect;
 import config.constants as const;
-from botOneFun import test_read,read_balance,add_account,create_table,update_balance
+from botOneFun import test_read,read_balance,add_account,create_table,update_balance,check_existance
 
 DATABASE_URL=const.DATABASE_URL
 
@@ -35,6 +35,20 @@ async def test_function_six():
 
 ##########################################################################################################
 
+@app.route('/check_account',methods = ['GET'])
+async def checkExistance():
+    try:
+        if request.method=="GET":
+            userID = request.args.get('userID')
+            return await check_existance(userID)
+    except:
+        return "Wrong json format"
+
+
+
+
+
+
 
 @app.route('/add_account',methods = ['POST'])
 async def addAccount():
@@ -48,7 +62,7 @@ async def addAccount():
 
 
 @app.route('/read_balance',methods = ['GET'])
-async def read_balances():
+async def readBalances():
     try:
         if request.method=="GET":
             userID = request.args.get('userID')
@@ -57,7 +71,7 @@ async def read_balances():
         return "ERROR"
 
 @app.route('/update_balances',methods = ['PUT'])
-async def update_balances():
+async def updateBalance():
     try:
         if request.method=="PUT":
             data = request.json
