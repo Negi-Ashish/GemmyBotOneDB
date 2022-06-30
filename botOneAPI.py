@@ -26,10 +26,10 @@ async def test_function_three():
 
 
 
-@app.route('/test_create',methods = ['POST'])
-async def test_function_six():
-    if request.method=="POST":
-        return create_table()
+# @app.route('/test_create',methods = ['POST'])
+# async def test_function_six():
+#     if request.method=="POST":
+#         return create_table()
 
 
 
@@ -53,11 +53,13 @@ async def checkExistance():
 @app.route('/add_account',methods = ['POST'])
 async def addAccount():
     try:
+        if request.headers["GEMMY_ACCESS_TOKEN"]!=const.GEMMY_ACCESS_TOKEN:
+            return "You are not Authorised by GemmyHead"        
         if request.method=="POST":
             data = request.json
             return await add_account(data['userId'],data['walletBalance'],data['bankBalance'])
     except:
-        return "Wrong json format"
+        return "You are not Authorised by GemmyHead"        
 
 
 
@@ -85,11 +87,13 @@ async def updateBalance():
 @app.route('/account_earn',methods = ['PUT'])
 async def earnGem():
     try:
+        if request.headers["GEMMY_ACCESS_TOKEN"]!=const.GEMMY_ACCESS_TOKEN:
+            return "You are not Authorised by GemmyHead"
         if request.method=="PUT":
             userID = request.args.get('userID')
             return await account_earn(userID)
     except:
-        return "ERROR"
+        return "You are not Authorised by GemmyHead"        
 
 
 @app.route('/fortune',methods = ['GET'])
