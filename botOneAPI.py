@@ -73,11 +73,13 @@ async def readBalances():
 @app.route('/update_balances',methods = ['PUT'])
 async def updateBalance():
     try:
+        if request.headers["GEMMY_ACCESS_TOKEN"]!=const.GEMMY_ACCESS_TOKEN:
+            return "You are not Authorised by GemmyHead"
         if request.method=="PUT":
             data = request.json
             return await update_balance(data['userId'],data['walletBalance'],data['bankBalance'])
     except:
-        return "Wrong json format"
+        return "You are not Authorised by GemmyHead"
 
 
 @app.route('/account_earn',methods = ['PUT'])
