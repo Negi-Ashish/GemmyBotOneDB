@@ -146,5 +146,5 @@ async def account_earn(userID):
 
 
 async def fortune_teller():
-    random_number = random.randrange(50)
+    random_number = random.randrange(150)
     return {"message":fortune_dict[random_number]}
