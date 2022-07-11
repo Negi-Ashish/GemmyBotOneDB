@@ -160,8 +160,8 @@ async def fd_earn(userID,data):
         cur.execute(query_read)
         con.commit()
         record = cur.fetchone()[0]
-        print(cur.fetchone())
-        print(record)
+        print("fetchone",cur.fetchone())
+        print("record",record)
         return 0
         dt = datetime.now()
         if record == None:
