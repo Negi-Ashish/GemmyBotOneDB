@@ -175,7 +175,7 @@ async def fd_earn(userID,data):
                 return {"message":f"""You can claim your gems after {remaining_time.days}days , {remaining_time.seconds//3600}hr and {(remaining_time.seconds//60)%60}min."""}
             else:
 
-                query = f"""UPDATE user_account SET "bank_balance"=("bank_balance"+"fixed_deposit"),"fd_start"='NULL',"fixed_deposit"='0'  Where ("user_id"='{userID}') """
+                query = f"""UPDATE user_account SET "bank_balance"=("bank_balance"+"fixed_deposit"),"fd_start"=NULL,"fixed_deposit"='0'  Where ("user_id"='{userID}') """
                 cur.execute(query)
                 con.commit()
                 return {"message":f"""You have claimied your FD interest please check your bank balance."""}
