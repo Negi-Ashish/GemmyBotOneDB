@@ -169,16 +169,12 @@ async def fd_earn(userID,data):
             intrest_gems = round((data['amount']*7)/100)
             return {"message":f"You have made a fixed deposit of {data['amount']} gems come after 3 days to claim {data['amount']+intrest_gems} gems."}
         else:
-            date_time_delta = record+timedelta(days = 3)
+            date_time_delta = record[0]+timedelta(seconds = 3)
             if(date_time_delta>=datetime.now()):
                 remaining_time = date_time_delta-datetime.now()
                 return {"message":f"""You can claim your gems after {remaining_time.days}days , {remaining_time.seconds//3600}hr and {(remaining_time.seconds//60)%60}min."""}
             else:
-                query_read = f"""SELECT "fixed_deposit" FROM user_account Where ("user_id"='{userID}')"""
-                cur.execute(query_read)
-                con.commit()
-                amount = cur.fetchone()[0]
-                intrest_gems = round((amount*7)/100)
+                intrest_gems = round((record[1]*7)/100)
                 if intrest_gems>1500:
                     intrest_gems=1500
                 query = f"""UPDATE user_account SET "bank_balance"=("bank_balance"+"fixed_deposit"+'{intrest_gems}'),"fd_start"=NULL,"fixed_deposit"='0'  Where ("user_id"='{userID}') """
