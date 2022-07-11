@@ -1,3 +1,4 @@
+from msilib.schema import Error
 import psycopg2
 import config.constants as const;
 from datetime import datetime,timedelta
@@ -141,7 +142,7 @@ async def account_earn(userID):
                 con.commit()
                 return {"message":f"""You have earned {random_amount} gems"""}
     except:
-        return {"message":"There was an issue with your gem earnings please contact a MOD","Error":"account_earn"}
+        return {"message":"You currently dont have a account. Type '!gemmy balance' to create a account","Error":"account_earn"}
     finally:
         if con is not None:
             con.close()
@@ -179,8 +180,8 @@ async def fd_earn(userID,data):
                 cur.execute(query)
                 con.commit()
                 return {"message":f"""You have claimied your FD interest please check your bank balance."""}
-    except:
-        return {"message":"There was an issue with your FD please contact a MOD","Error":"FD_earn"}
+    except Exception as e:
+        return {"message":"There was an issue with your FD please contact a MOD","Error":("FD_earn",e)}
     finally:
         if con is not None:
             con.close()
