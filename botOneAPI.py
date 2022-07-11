@@ -1,7 +1,7 @@
 from flask import Flask;
 from flask import request,redirect;
 import config.constants as const;
-from botOneFun import test_read,read_balance,add_account,create_table,update_balance,check_existance,account_earn,fortune_teller
+from botOneFun import test_read,read_balance,add_account,create_table,update_balance,check_existance,account_earn,fortune_teller,fd_earn
 
 DATABASE_URL=const.DATABASE_URL
 
@@ -103,6 +103,19 @@ async def fortune():
             return await fortune_teller()
     except:
         return "Fortune error"
+
+
+
+@app.route('/fixed_deposit',methods = ['PUT'])
+async def updateBalance():
+    try:
+        if request.headers["GEMMY_ACCESS_TOKEN"]!=const.GEMMY_ACCESS_TOKEN:
+            return "You are not Authorised by GemmyHead"
+        if request.method=="PUT":
+            data = request.json
+            return await fd_earn(data['userId'],data)
+    except:
+        return "You are not Authorised by GemmyHead"
 
 
 if __name__ == "__main__":

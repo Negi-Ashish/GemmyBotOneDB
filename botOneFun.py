@@ -150,3 +150,37 @@ async def account_earn(userID):
 async def fortune_teller():
     random_number = random.randrange(150)
     return {"message":fortune_dict[random_number]}
+
+
+
+async def fd_earn(userID,data):
+    try:
+        con = psycopg2.connect(DATABASE_URL)
+        cur = con.cursor()
+        query_read = f"""SELECT "fd_start" FROM user_account Where ("user_id"='{userID}')"""
+        cur.execute(query_read)
+        con.commit()
+        record = cur.fetchone()[0]
+        dt = datetime.now()
+        if record == None:
+            query = f"""UPDATE user_account SET "bank_balance"=("bank_balance"-'{data['amount']}'),"fd_start"='{dt}',"fixed_deposit"='{data['amount']}' Where ("user_id"='{userID}') """
+            cur.execute(query)
+            con.commit()
+            intrest_gems = round((data['amount']*7)/100)
+            return {"message":f"You have made a fixed deposit of {data['amount']} gems come after 3 days to claim {data['amount']+intrest_gems} gems."}
+        else:
+            date_time_delta = record+timedelta(days = 3)
+            if(date_time_delta>=datetime.now()):
+                remaining_time = date_time_delta-datetime.now()
+                return {"message":f"""You can claim your gems after {remaining_time.days} , {remaining_time.seconds//3600}hr and {(remaining_time.seconds//60)%60}min."""}
+            else:
+
+                query = f"""UPDATE user_account SET "bank_balance"=("bank_balance"+"fixed_deposit"),"fd_start"='NULL',"fixed_deposit"='0'  Where ("user_id"='{userID}') """
+                cur.execute(query)
+                con.commit()
+                return {"message":f"""You have claimied your FD interest please check your bank balance."""}
+    except:
+        return {"message":"There was an issue with your FD please contact a MOD","Error":"FD_earn"}
+    finally:
+        if con is not None:
+            con.close()
