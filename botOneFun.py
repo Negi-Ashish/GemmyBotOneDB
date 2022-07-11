@@ -162,7 +162,7 @@ async def fd_earn(userID,data):
         record = cur.fetchone()[0]
         print("fetchone",cur.fetchone())
         print("record",record)
-        return 0
+        return "lol"
         dt = datetime.now()
         if record == None:
             query = f"""UPDATE user_account SET "bank_balance"=("bank_balance"-'{data['amount']}'),"fd_start"='{dt}',"fixed_deposit"='{data['amount']}' Where ("user_id"='{userID}') """
