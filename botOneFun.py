@@ -174,8 +174,12 @@ async def fd_earn(userID,data):
                 remaining_time = date_time_delta-datetime.now()
                 return {"message":f"""You can claim your gems after {remaining_time.days}days , {remaining_time.seconds//3600}hr and {(remaining_time.seconds//60)%60}min."""}
             else:
-
-                query = f"""UPDATE user_account SET "bank_balance"=("bank_balance"+"fixed_deposit"),"fd_start"=NULL,"fixed_deposit"='0'  Where ("user_id"='{userID}') """
+                query_read = f"""SELECT "fixed_deposit" FROM user_account Where ("user_id"='{userID}')"""
+                cur.execute(query_read)
+                con.commit()
+                amount = cur.fetchone()[0]
+                intrest_gems = round((amount*7)/100)
+                query = f"""UPDATE user_account SET "bank_balance"=("bank_balance"+"fixed_deposit"+'{intrest_gems}'),"fd_start"=NULL,"fixed_deposit"='0'  Where ("user_id"='{userID}') """
                 cur.execute(query)
                 con.commit()
                 return {"message":f"""You have claimied your FD interest please check your bank balance."""}
