@@ -124,7 +124,6 @@ async def account_earn(userID):
         record = cur.fetchone()[0]
         dt = datetime.now()
         if record == None:
-
             query = f"""UPDATE user_account SET "earn_start"='{dt}' Where ("user_id"='{userID}') """
             cur.execute(query)
             con.commit()
@@ -136,7 +135,7 @@ async def account_earn(userID):
                 return {"message":f"""You can claim your gems after {remaining_time.seconds//3600}hr and {(remaining_time.seconds//60)%60}min."""}
             else:
                 random_amount = random.randrange(101)
-                query = f"""UPDATE user_account SET "wallet_balance"=("wallet_balance"+'{random_amount}'),"earn_start"='{dt}' Where ("user_id"='{userID}') """
+                query = f"""UPDATE user_account SET "wallet_balance"=("wallet_balance"+'{random_amount}'),"earn_start"=NULL Where ("user_id"='{userID}') """
                 cur.execute(query)
                 con.commit()
                 return {"message":f"""You have earned {random_amount} gems"""}
@@ -157,10 +156,13 @@ async def fd_earn(userID,data):
     try:
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
-        query_read = f"""SELECT "fd_start" FROM user_account Where ("user_id"='{userID}')"""
+        query_read = f"""SELECT "fd_start","fixed_deposit","bank_balance" FROM user_account Where ("user_id"='{userID}')"""
         cur.execute(query_read)
         con.commit()
         record = cur.fetchone()[0]
+        print(cur.fetchone())
+        print(record)
+        return 0
         dt = datetime.now()
         if record == None:
             query = f"""UPDATE user_account SET "bank_balance"=("bank_balance"-'{data['amount']}'),"fd_start"='{dt}',"fixed_deposit"='{data['amount']}' Where ("user_id"='{userID}') """
