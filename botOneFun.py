@@ -85,7 +85,7 @@ async def read_balance(userID):
     try:
         con = psycopg2.connect(DATABASE_URL)
         cur = con.cursor()
-        query = f"""SELECT "wallet_balance","bank_balance" FROM user_account Where ("user_id"='{userID}')"""        
+        query = f"""SELECT "wallet_balance","bank_balance","fixed_deposit" FROM user_account Where ("user_id"='{userID}')"""        
         cur.execute(query)
         con.commit()
         record = cur.fetchone()
