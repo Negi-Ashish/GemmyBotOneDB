@@ -184,6 +184,7 @@ async def fd_earn(userID,data):
                 con.commit()
                 return {"message":f"""You have claimied your FD interest ({intrest_gems}gems) please check your bank balance.\n You can open a new FD now."""}
     except Exception as e:
+        print(e)
         return {"message":"There was an issue with your FD(fd_earn) please contact a MOD","Error":f"{e}"}
     finally:
         if con is not None:
