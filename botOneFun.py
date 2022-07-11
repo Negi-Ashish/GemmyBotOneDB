@@ -161,7 +161,7 @@ async def fd_earn(userID,data):
         con.commit()
         record = cur.fetchall()[0]
         if data['amount']>record[2]:
-            return {"message":f"""You cannot start a FD of {data['amount']} gems with bank balance of {record[2]}gems."""}
+            return {"message":f"""You cannot start a FD of {data['amount']} gems with bank balance of {record[2]} gems."""}
         # [(datetime.datetime(2022, 7, 11, 12, 50, 26, 786131), 400, 656)]
         dt = datetime.now()
         if record[0] == None:
