@@ -159,12 +159,8 @@ async def fd_earn(userID,data):
         query_read = f"""SELECT "fd_start","fixed_deposit","bank_balance" FROM user_account Where ("user_id"='{userID}')"""
         cur.execute(query_read)
         con.commit()
-        record = cur.fetchone()[0]
-        record_2 = cur.fetchone()[1]
-        record_3 = cur.fetchone()[2]
-        print("fd",record_2)
-        print("bb",record_3)
-        print("date",record)
+        record = cur.fetchall()
+        print(record)
         return "lol"
         dt = datetime.now()
         if record == None:
