@@ -90,7 +90,7 @@ async def read_balance(userID):
         con.commit()
         record = cur.fetchone()
         print(record)
-        return {"wallet_balance":record[0],"bank_balance":record[1]}
+        return {"wallet_balance":record[0],"bank_balance":record[1],"fixed_deposit":record[2]}
     except:
         return {"wallet_balance":"FAILURE","bank_balance":"FAILURE","error":"No such Id exists"}
     finally:
