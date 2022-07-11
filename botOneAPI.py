@@ -107,7 +107,7 @@ async def fortune():
 
 
 @app.route('/fixed_deposit',methods = ['PUT'])
-async def updateBalance():
+async def fixedDeposit():
     try:
         if request.headers["GEMMY_ACCESS_TOKEN"]!=const.GEMMY_ACCESS_TOKEN:
             return "You are not Authorised by GemmyHead"
