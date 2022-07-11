@@ -1,4 +1,3 @@
-from msilib.schema import Error
 import psycopg2
 import config.constants as const;
 from datetime import datetime,timedelta
