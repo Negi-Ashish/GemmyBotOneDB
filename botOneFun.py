@@ -161,7 +161,7 @@ async def fd_earn(userID,data):
         con.commit()
         record = cur.fetchall()[0]
         if data['amount']>record[2]:
-            return {"message":f"""You cannot start a FD of {data['amount']}gems with bank balance of {record[2]}gems."""}
+            return {"message":f"""You cannot start a FD of {data['amount']} gems with bank balance of {record[2]}gems."""}
         # [(datetime.datetime(2022, 7, 11, 12, 50, 26, 786131), 400, 656)]
         dt = datetime.now()
         if record[0] == None:
@@ -169,12 +169,12 @@ async def fd_earn(userID,data):
             cur.execute(query)
             con.commit()
             intrest_gems = round((data['amount']*7)/100)
-            return {"message":f"You have made a fixed deposit of {data['amount']}gems come after 3 days to claim {data['amount']+intrest_gems}gems."}
+            return {"message":f"You have made a fixed deposit of {data['amount']} gems come after 3 days to claim {data['amount']+intrest_gems} gems."}
         else:
             date_time_delta = record[0]+timedelta(days = 3)
             if(date_time_delta>=datetime.now()):
                 remaining_time = date_time_delta-datetime.now()
-                return {"message":f"""You alredy have a FD of {record[1]}gems come after {remaining_time.days}days , {remaining_time.seconds//3600}hr and {(remaining_time.seconds//60)%60}min to start a new FD."""}
+                return {"message":f"""You alredy have a FD of {record[1]} gems come after {remaining_time.days}days , {remaining_time.seconds//3600}hr and {(remaining_time.seconds//60)%60}min to start a new FD."""}
             else:
                 intrest_gems = round((record[1]*7)/100)
                 if intrest_gems>1500:
@@ -182,7 +182,7 @@ async def fd_earn(userID,data):
                 query = f"""UPDATE user_account SET "bank_balance"=("bank_balance"+"fixed_deposit"+'{intrest_gems}'),"fd_start"=NULL,"fixed_deposit"='0'  Where ("user_id"='{userID}') """
                 cur.execute(query)
                 con.commit()
-                return {"message":f"""You have claimied your FD interest ({intrest_gems}gems) please check your bank balance.\n You can open a new FD now."""}
+                return {"message":f"""You have claimied your FD interest ({intrest_gems} gems) please check your bank balance.\n You can open a new FD now."""}
     except Exception as e:
         print(e)
         return {"message":"There was an issue with your FD(fd_earn) please contact a MOD","Error":f"{e}"}
