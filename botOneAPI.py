@@ -26,10 +26,10 @@ async def test_function_three():
 
 
 
-# @app.route('/test_create',methods = ['POST'])
-# async def test_function_six():
-#     if request.method=="POST":
-#         return create_table()
+@app.route('/test_create',methods = ['POST'])
+async def test_function_six():
+    if request.method=="POST":
+        return create_table()
 
 
 

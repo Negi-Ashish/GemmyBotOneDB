@@ -35,7 +35,9 @@ def create_table():
                     user_id VARCHAR (20) PRIMARY KEY,
                     wallet_balance INT NOT NULL,
                     bank_balance INT NOT NULL,
-                    earn_start TIMESTAMP
+                    fixed_deposit INT DEFAULT 0,
+                    earn_start TIMESTAMP,
+                    fd_start TIMESTAMP
                     );"""
         cur.execute(query)
         con.commit()
